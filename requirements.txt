@@ -1,0 +1,7 @@
+boto3
+Collectfast
+Django
+django-environ
+psycopg2-binary
+Werkzeug==1.0.1
+pymysql==1.0.2

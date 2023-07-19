@@ -1,0 +1,57 @@
+service: django-poc
+variablesResolutionMode: 20210326
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-python-requirements
+  - serverless-wsgi
+
+custom:
+  pythonRequirements:
+    slim: true
+    fileName: requirements.txt
+    useDownloadCache: false
+    useStaticCache: false
+  wsgi:
+    app: django_poc.wsgi.application
+    packRequirements: false
+  prune:
+    automatic: true
+    number: 3
+
+functions:
+  app:
+    handler: wsgi_handler.handler
+    events:
+      - http:
+         path: ANY /
+         cors: true
+
+    timeout: 30
+
+provider:
+  name: aws
+  stage: dev
+  region: ap-southeast-1
+  runtime: python3.9
+  versionFunctions: false
+  timeout: 30
+  apiGateway:
+    shouldStartNameWithService: true
+  lambdaHashingVersion: 20201221
+
+package:
+  individually:
+    false
+  exclude:
+    - .cache/**
+    - .env
+    - .git/**
+    - .github/**
+    - .pytest_cache/**
+    - .serverless/**
+    - node_modules/**
+    - static/**
+    - db.sqlite3

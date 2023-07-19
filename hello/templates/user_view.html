@@ -1,0 +1,6 @@
+<h1>User Details</h1>
+<ul>
+{% for user in users %}
+    <li>{{ user.email }}, {{ user.name }}</li>
+{% endfor %}
+</ul>
